@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Product Filter</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-3 bg-light p-3" style="height: 100vh; overflow-y: auto">
+          <h4>Categories</h4>
+          <ul class="list-group mb-4">
+            <a
+              href="{% url 'index' %}"
+              class="list-group-item {% if not selected_category %}active{% endif %}"
+            >
+              All Categories
+            </a>
+
+            {% for c in categories %}
+            <a
+              href="?category={{ c.category_id }}{% if selected_supplier %}&supplier={{ selected_supplier }}{% endif %}"
+              class="list-group-item {% if selected_category == c.category_id|stringformat:'s' %}active{% endif %}"
+            >
+              {{ c.category_name }}
+            </a>
+            {% endfor %}
+          </ul>
+
+          <h4>Suppliers</h4>
+          <ul class="list-group">
+            <a
+              href="?{% if selected_category %}category={{ selected_category }}{% endif %}"
+              class="list-group-item {% if not selected_supplier %}active{% endif %}"
+            >
+              All Suppliers
+            </a>
+
+            {% for s in suppliers %}
+            <a
+              href="?supplier={{ s.supplier_id }}{% if selected_category %}&category={{ selected_category }}{% endif %}"
+              class="list-group-item {% if selected_supplier == s.supplier_id|stringformat:'s' %}active{% endif %}"
+            >
+              {{ s.company_name }}
+            </a>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="col-9 p-4">
+          <h2>Products</h2>
+          <hr />
+
+          {% if products %}
+          <div class="row">
+            {% for p in products %}
+            <div class="col-4 mb-3">
+              <div class="card p-3 shadow-sm">
+                <h5>{{ p.product_name }}</h5>
+                <p>Category: {{ p.category.category_name }}</p>
+                <p>Supplier: {{ p.supplier.company_name }}</p>
+                <p>Price: ${{ p.unit_price }}</p>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <p>No products found.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
