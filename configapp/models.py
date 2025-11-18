@@ -1,6 +1,4 @@
 from django.db import models
-from django import forms
-import re
 
 
 class Category(models.Model):
@@ -71,21 +69,3 @@ class Product(models.Model):
   class Meta:
     verbose_name = "Product"
     verbose_name_plural = "Products"
-
-class ProductsForm(forms.ModelForm):
-  class Meta:
-    model = Product
-    fields = "__all__"
-    widgets = {
-      'product_name': forms.TextInput(attrs={'class': 'form-control'}),
-      'supplier': forms.Select(attrs={'class': 'form-control'}),
-      'category': forms.Select(attrs={'class': 'form-control'}),
-    }
-  
-  def clean_title(self):
-    title = self.cleaned_data['product_name']
-
-    if re.match(r'\d', title):
-      raise Exception("Product Name cannot be all integer")
-    
-    return title

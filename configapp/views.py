@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from .models import Category, Supplier, Product, ProductsForm
+from django.shortcuts import render
+from .models import Category, Supplier, Product
 
 def index(request):
   categories = Category.objects.all()
@@ -27,14 +27,4 @@ def index(request):
   return render(request, 'index.html', context)
 
 
-def add_product(request):
-  if request.method == "POST":
-    form = ProductsForm(request.POST, request.FILES)
-    if form.is_valid():
-      form.save()
-      return redirect('index')
-  else:
-    form = ProductsForm()
-
-  return render(request, 'add_product.html', {'form': form})
 
