@@ -20,5 +20,6 @@ from configapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('index/', views.index, name='index')
+    path('index/', views.index, name='index'),
+    path('add_product/', views.add_product, name='add_product')
 ]
