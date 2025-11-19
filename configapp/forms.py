@@ -1,6 +1,8 @@
 from django import forms
 import re
 from .models import Product
+from django.core.exceptions import ValidationError
+
 
 class ProductForm(forms.ModelForm):
   class Meta:
@@ -12,10 +14,10 @@ class ProductForm(forms.ModelForm):
       'category': forms.Select(attrs={'class': 'form-control'}),
     }
   
-  def clean_name(self):
+  def clean_product_name(self):
     name = self.cleaned_data['product_name']
 
     if re.match(r'\d', name):
-      raise Exception("Product Name cannot be all Integer")
+      raise ValidationError("Product Name cannot be all Integer")
     
     return name

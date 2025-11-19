@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Category, Supplier, Product, ProductForm
+from .models import Category, Supplier, Product
+from .forms import ProductForm
 
 def index(request):
   categories = Category.objects.all()
